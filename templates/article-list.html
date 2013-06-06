@@ -1,0 +1,11 @@
+<h1>File Blog</h1>
+
+<ul>
+    <% __::each($articles, function($article) { %>
+        <li>
+            <a href="<%= $article['url'] %>">
+                <%= $article['title'] %>
+            </a>
+        </li>
+    <% }); %>
+</ul>

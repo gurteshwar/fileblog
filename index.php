@@ -1,5 +1,11 @@
 <?php
-$baseurl = 'http://localhost/fileblog';
+$pwd = dirname(__FILE__);
+require $pwd.'/lib/underscore.php';
+
+// compile templates
+$template_article = __::template(file_get_contents($pwd.'/templates/article.html'));
+$template_article_list = __::template(file_get_contents($pwd.'/templates/article-list.html'));
+$template_page = __::template(file_get_contents($pwd.'/templates/layout.html'));
 
 function findArticleBySlug($slug, $articles) {
     foreach ($articles as $article) {
@@ -19,8 +25,8 @@ function renderList($articles) {
 
 function buildData() {
     // Get articles list
-    $pwd = dirname(__FILE__);
-    $filepaths = glob($pwd.'/articles/*.txt');
+    $baseurl = 'http://localhost/fileblog';
+    $filepaths = glob(dirname(__FILE__).'/articles/*.txt');
 
     // Build blog data
     $articles = array();
@@ -83,10 +89,19 @@ if ($pquery) {
     $article = findArticleBySlug($slug, $articles);
 
     if (!$article) {
-        echo '404';
+        echo $template_page(array(
+            'page_title' => '404',
+            'page_content' => 'Not found!',
+        ));
     } else {
-        renderArticle($article);
+        echo $template_page(array(
+            'page_title' => $article['title'],
+            'page_content' => $template_article(array('article' => $article)),
+        ));
     }
 } else {
-    renderList($articles);
+    echo $template_page(array(
+        'page_title' => 'File Blog',
+        'page_content' => $template_article_list(array('articles' => $articles)),
+    ));
 }
