@@ -24,6 +24,13 @@ function renderList($articles) {
     print_r($articles);
 }
 
+function cmpTimestampDesc($a, $b) {
+    if ($a['timestamp'] == $b['timestamp']) {
+        return 0;
+    }
+    return ($a['timestamp'] < $b['timestamp']) ? 1 : -1;
+}
+
 function buildData() {
     // Get articles list
     $baseurl = 'http://localhost/fileblog';
@@ -77,6 +84,7 @@ function buildData() {
         $articles[] = $data;
     }
 
+    usort($articles, 'cmpTimestampDesc');
     return $articles;
 }
 
