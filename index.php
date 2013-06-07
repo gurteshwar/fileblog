@@ -7,9 +7,10 @@ $template_article = __::template(file_get_contents($pwd.'/templates/article.html
 $template_article_list = __::template(file_get_contents($pwd.'/templates/article-list.html'));
 $template_page = __::template(file_get_contents($pwd.'/templates/layout.html'));
 
-function findArticleBySlug($slug, $articles) {
+function findArticle($date, $slug, $articles) {
     foreach ($articles as $article) {
-        if ($article['slug'] === $slug) {
+        if ($article['slug'] === $slug &&
+            strtotime('midnight', $article['timestamp']) == $date) {
             return $article;
         }
     }
@@ -71,6 +72,7 @@ function buildData() {
 
         // other info
         $data['url'] = $baseurl.'/'.date('Y\/m\/d\/', $data['timestamp']).$data['slug'];
+        $data['excerpt'] = substr($data['content'], 0, 500);
 
         $articles[] = $data;
     }
@@ -80,24 +82,28 @@ function buildData() {
 
 $articles = buildData();
 
-$pquery = $_GET['q'];
+$pquery = isset($_GET['q']) ? $_GET['q'] : NULL;
 if ($pquery) {
     // extract slug
     $parts = explode('/', $pquery);
-    $slug = array_pop($parts);
 
-    $article = findArticleBySlug($slug, $articles);
+    if (sizeof($parts) == 4) {
+        $urldata = array_combine(array('y', 'm', 'd', 'slug'), $parts);
+        $udate = strtotime($urldata['y'].'-'.$urldata['m'].'-'.$urldata['d']);
 
-    if (!$article) {
-        echo $template_page(array(
-            'page_title' => '404',
-            'page_content' => 'Not found!',
-        ));
-    } else {
-        echo $template_page(array(
-            'page_title' => $article['title'],
-            'page_content' => $template_article(array('article' => $article)),
-        ));
+        $article = findArticle($udate, $urldata['slug'], $articles);
+
+        if (!$article) {
+            echo $template_page(array(
+                'page_title' => '404',
+                'page_content' => 'Not found!',
+            ));
+        } else {
+            echo $template_page(array(
+                'page_title' => $article['title'],
+                'page_content' => $template_article(array('article' => $article)),
+            ));
+        }
     }
 } else {
     echo $template_page(array(

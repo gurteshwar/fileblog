@@ -2,10 +2,13 @@
 
 <ul>
     <% __::each($articles, function($article) { %>
-        <li>
-            <a href="<%= $article['url'] %>">
+        <li><h2><a href="<%= $article['url'] %>">
                 <%= $article['title'] %>
-            </a>
+            </a></h2>
+            <p>
+                <%= $article['excerpt'] %>&hellip;
+            </p>
+            <a href="<%= $article['url'] %>">read &rarr;</a>
         </li>
     <% }); %>
 </ul>
