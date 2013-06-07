@@ -1,4 +1,8 @@
 <?php
+// config
+$baseurl = 'http://localhost/fileblog';
+
+// no editing beyond this point
 $pwd = dirname(__FILE__);
 require $pwd.'/lib/underscore.php';
 
@@ -32,9 +36,10 @@ function cmpTimestampDesc($a, $b) {
 }
 
 function buildData() {
+    global $baseurl, $pwd;
+
     // Get articles list
-    $baseurl = 'http://localhost/fileblog';
-    $filepaths = glob(dirname(__FILE__).'/articles/*.txt');
+    $filepaths = glob($pwd.'/articles/*.txt');
 
     // Build blog data
     $articles = array();
@@ -90,6 +95,7 @@ function buildData() {
 
 $articles = buildData();
 
+// router
 $pquery = isset($_GET['q']) ? $_GET['q'] : NULL;
 if ($pquery) {
     // extract slug
