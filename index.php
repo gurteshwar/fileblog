@@ -5,6 +5,7 @@ $baseurl = 'http://localhost/fileblog';
 // no editing beyond this point
 $pwd = dirname(__FILE__);
 require $pwd.'/lib/underscore.php';
+require $pwd.'/lib/Markdown.php';
 
 // compile templates
 $template_article = __::template(file_get_contents($pwd.'/templates/article.html'));
@@ -85,6 +86,7 @@ function buildData() {
         // other info
         $data['url'] = $baseurl.'/'.date('Y\/m\/d\/', $data['timestamp']).$data['slug'];
         $data['excerpt'] = substr($data['content'], 0, 500);
+        $data['content'] = Markdown::defaultTransform($data['content']);
 
         $articles[] = $data;
     }
