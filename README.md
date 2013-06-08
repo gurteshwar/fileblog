@@ -1,6 +1,6 @@
-A static file-based blog system powered by PHP and managed by git. Markdown is supported, and you can customize the view templates from scratch.
+A static file-based blog system powered by PHP and managed by git. Posts are written in Markdown and comments are powered by Disqus. Fileblog uses underscore templates which can be easily customized from scratch.
 
 #Get started
-Set the $baseurl on line #3 of index.php and you're good to go. Use the sample template to create articles.
+Set the site url and other settings in config.ini and you're good to go.
 
 Needless to say, files inside the project should be readable.
