@@ -1,12 +1,13 @@
 <ul class="articles">
     <% __::each($articles, function($article) { %>
-        <li><h2><a href="<%= $article['url'] %>">
-                <%= $article['title'] %>
-            </a></h2>
-
+        <li>
             <time datetime="<%= date('Y-m-d H:i:s', $article['timestamp']) %>">
                 <%= date('d M Y', $article['timestamp']) %>
             </time>
+
+            <h2><a href="<%= $article['url'] %>">
+                <%= $article['title'] %>
+            </a></h2>
 
             <p>
                 <%= $article['excerpt'] %>&hellip;

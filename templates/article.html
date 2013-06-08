@@ -1,11 +1,11 @@
 <article>
-    <h1><a href="<%= $article['url'] %>">
-        <%= $article['title'] %>
-    </a></h1>
-
     <time datetime="<%= date('Y-m-d H:i:s', $article['timestamp']) %>">
         <%= date('d M Y \/ g:i:s a', $article['timestamp']) %>
     </time>
+
+    <h1><a href="<%= $article['url'] %>">
+        <%= $article['title'] %>
+    </a></h1>
 
     <div>
     <%= $article['content'] %>
