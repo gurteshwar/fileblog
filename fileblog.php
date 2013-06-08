@@ -59,7 +59,7 @@ class Fileblog {
             fclose($handle);
         }
         $data['content'] = Markdown::defaultTransform($data['content']);
-        $data['excerpt'] = substr(strip_tags($data['content']), 0, 500);
+        $data['excerpt'] = substr(strip_tags($data['content']), 0, $this->config['excerpt_char_limit']);
 
         return $data;
     }
