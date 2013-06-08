@@ -10,11 +10,15 @@
         <title><%= $page_title %><%= $app->config['page_title_suffix'] %></title>
 
         <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css">
+        <link rel="stylesheet/less" type="stylesheet" href="<%= $app->config['site_url'].'/css/styles.less' %>">
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js"></script>
     </head>
     <body>
+        <div class="wrapper">
         <%= $page_content %>
+        </div>
 
-        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.3.3/less.min.js"></script>
     </body>
 </html>
