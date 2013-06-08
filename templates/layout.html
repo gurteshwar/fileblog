@@ -17,8 +17,23 @@
     </head>
     <body>
         <div class="wrapper">
-        <%= $page_content %>
-        </div>
+            <header>
+                <span class="name" itemscope itemtype="http://schema.org/Person">
+                    <span itemprop="name">Ramnique Singh</span>
+                </span> /
+                <a href="<%= $app->config['site_url'] %>"><%= $app->config['homepage_title'] %></a> /
+                <a href="http://twitter.com/ramniquesingh">@ramniquesingh</a>
+            </header>
 
+            <div class="content">
+                <%= $page_content %>
+            </div>
+
+            <footer>
+                <div class="powered-by">
+                    powered by <a href="https://github.com/ramniquesingh/fileblog">Fileblog</a>.
+                <div>
+            </footer>
+        </div>
     </body>
 </html>
