@@ -1,14 +1,19 @@
 <h1>File Blog</h1>
 
-<ul>
+<ul class="articles">
     <% __::each($articles, function($article) { %>
         <li><h2><a href="<%= $article['url'] %>">
                 <%= $article['title'] %>
             </a></h2>
+
+            <time datetime="<%= date('Y-m-d H:i:s', $article['timestamp']) %>">
+                <%= date('d M Y', $article['timestamp']) %>
+            </time>
+
             <p>
                 <%= $article['excerpt'] %>&hellip;
+                <a class="read-more" href="<%= $article['url'] %>">continue reading &rarr;</a>
             </p>
-            <a href="<%= $article['url'] %>">read &rarr;</a>
         </li>
     <% }); %>
 </ul>

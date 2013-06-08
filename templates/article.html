@@ -1,8 +1,16 @@
-<h1><%= $article['title'] %></h1>
-<em><%= date('Y-m-d', $article['timestamp']) %></em>
-<div>
-<%= $article['content'] %>
-</div>
+<article>
+    <h1><a href="<%= $article['url'] %>">
+        <%= $article['title'] %>
+    </a></h1>
+
+    <time datetime="<%= date('Y-m-d H:i:s', $article['timestamp']) %>">
+        <%= date('d M Y', $article['timestamp']) %>
+    </time>
+
+    <div>
+    <%= $article['content'] %>
+    </div>
+</article>
 
 <div id="disqus_thread"></div>
 <script type="text/javascript">
