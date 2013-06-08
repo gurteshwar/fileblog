@@ -76,7 +76,7 @@ class Fileblog {
 
         $this->render_page(array(
             'page_title' => 'File Blog',
-            'page_content' => $this->$this->render_template('article_list', array('articles' => $articles)),
+            'page_content' => $this->render_template('article_list', array('articles' => $articles)),
         ));
     }
 
