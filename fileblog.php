@@ -11,6 +11,9 @@ class Fileblog {
         // load config
         $this->config = parse_ini_file('config.ini');
 
+        // timezone
+        date_default_timezone_set($this->config['timezone']);
+
         // compile templates
         $dir = dirname(__FILE__);
         $this->templates = array(
