@@ -7,8 +7,7 @@ class Fileblog {
     public $config;
     public $templates;
 
-    public function __construct()
-    {
+    public function __construct() {
         // load config
         $this->config = parse_ini_file('config.ini');
 
@@ -75,9 +74,9 @@ class Fileblog {
             $articles[] = $this->read_article($file);
         }
 
-        echo $this->templates['page'](array(
+        $this->render_page(array(
             'page_title' => 'File Blog',
-            'page_content' => $this->templates['article_list'](array('articles' => $articles)),
+            'page_content' => $this->$this->render_template('article_list', array('articles' => $articles)),
         ));
     }
 
@@ -102,20 +101,44 @@ class Fileblog {
         if ($targetfile) {
             $article = $this->read_article($targetfile);
 
-            echo $this->templates['page'](array(
+            $this->render_page(array(
                 'page_title' => $article['title'],
-                'page_content' => $this->templates['article'](array(
+                'page_content' => $this->render_template('article', array(
                     'article' => $article
                 )),
             ));
         } else {
-            http_response_code(404);
-
-            echo $this->templates['page'](array(
+            $this->render_page(array(
                 'page_title' => 'Not found',
-                'page_content' => $this->templates['404'](),
+                'page_content' => $this->render_template('404'),
+                'response_code' => 404
             ));
         }
+    }
+
+    private function render_template($template, $data=array()) {
+        $viewdata = array_merge($data, array(
+            'app' => $this,
+        ));
+
+        return $this->templates[$template]($viewdata);
+    }
+
+    private function render_page($data) {
+        $default_data = array(
+            'page_title' => '',
+            'page_content' => '',
+            'response_code' => 200
+        );
+        $viewdata = array_merge($default_data, $data);
+
+        http_response_code($viewdata['response_code']);
+
+        echo $this->templates['page'](array(
+            'page_title' => $viewdata['page_title'],
+            'page_content' => $viewdata['page_content'],
+            'app' => $this,
+        ));
     }
 
     private function route($query) {
