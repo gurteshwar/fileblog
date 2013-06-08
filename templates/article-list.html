@@ -12,3 +12,12 @@
         </li>
     <% }); %>
 </ul>
+
+<hr />
+
+<% if ($pagination['page'] > 1) { %>
+    <a href="<%= $app->config['site_url'].'/page/'.($pagination['page'] - 1) %>">&larr; previous page</a>
+<% } %>
+<% if ($pagination['page'] < $pagination['pagecount']) { %>
+    <a href="<%= $app->config['site_url'].'/page/'.($pagination['page'] + 1) %>">next page &rarr;<a>
+<% } %>

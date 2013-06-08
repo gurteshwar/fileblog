@@ -67,7 +67,14 @@ class Fileblog {
     private function show_list($page=1) {
         $filelist = glob(dirname(__FILE__).'/'.$this->config['articles_dir'].'/*.md');
         $filelist = array_reverse($filelist);
-        $filelist = array_slice($filelist, 0, $this->config['articles_per_page']);
+
+        // pageination
+        $pagination = array();
+        $pagination['page'] = $page;
+        $pagination['offset'] = ($pagination['page'] - 1) * $this->config['articles_per_page'];
+        $pagination['pagecount'] = ceil(sizeof($filelist) / $this->config['articles_per_page']);
+
+        $filelist = array_slice($filelist, $pagination['offset'], $this->config['articles_per_page']);
 
         $articles = array();
         foreach ($filelist as $file) {
@@ -76,7 +83,10 @@ class Fileblog {
 
         $this->render_page(array(
             'page_title' => 'File Blog',
-            'page_content' => $this->render_template('article_list', array('articles' => $articles)),
+            'page_content' => $this->render_template('article_list', array(
+                'articles' => $articles,
+                'pagination' => $pagination,
+            )),
         ));
     }
 
