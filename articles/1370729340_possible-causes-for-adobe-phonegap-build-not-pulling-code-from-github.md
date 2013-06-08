@@ -1,7 +1,7 @@
 Possible causes for Adobe Phonegap Build not pulling code from github
 =====================================================================
 
-While using [Adobe Phonegap Build](https://build.phonegap.com) with [github](https://github.com/), we came across an issue where config.xml properties were not reflecting in the app and the builds were resulting in empty apps with incomplete resources.
+While using [Adobe Phonegap Build](https://build.phonegap.com) with [github](https://github.com/), we came across an issue where `config.xml` properties were not reflecting in the app and the builds were resulting in empty apps with incomplete resources.
 
 Following two solutions helped us resolve the same:
 
