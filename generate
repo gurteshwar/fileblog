@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * Create URL Title
+ *
+ * Takes a "title" string as input and creates a
+ * human-friendly URL string with either a dash
+ * or an underscore as the word separator.
+ *
+ * @access  public
+ * @param   string  the string
+ * @param   string  the separator: dash, or underscore
+ * @return  string
+ */
+function url_title($str, $separator = 'dash', $lowercase = FALSE)
+{
+    if ($separator == 'dash')
+    {
+        $search     = '_';
+        $replace    = '-';
+    }
+    else
+    {
+        $search     = '-';
+        $replace    = '_';
+    }
+
+    $trans = array(
+                    '&\#\d+?;'              => '',
+                    '&\S+?;'                => '',
+                    '\s+'                   => $replace,
+                    '[^a-z0-9\-\._]'        => '',
+                    $replace.'+'            => $replace,
+                    $replace.'$'            => $replace,
+                    '^'.$replace            => $replace,
+                    '\.+$'                  => ''
+                );
+
+    $str = strip_tags($str);
+
+    foreach ($trans as $key => $val)
+    {
+        $str = preg_replace("#".$key."#i", $val, $str);
+    }
+
+    if ($lowercase === TRUE)
+    {
+        $str = strtolower($str);
+    }
+
+    return trim(stripslashes($str));
+}
+
+// INIT
+$stdout = fopen("php://stdout", "w");
+$title = isset($argv[1]) ? trim($argv[1]) :  NULL;
+if ($title) {
+    $slug = url_title($title, "dash", TRUE);
+    $filename = time().'_'.$slug.'.md';
+    $filepath = dirname(__FILE__).'/articles/'.$filename;
+    $file = fopen($filepath, 'w');
+    if ($file) {
+        fwrite($file, $title."\r\n");
+        fwrite($file, str_repeat('=', strlen($title))."\r\n");
+        fwrite($file, "\r\n");
+        fwrite($file, "Content goes here ...\r\n");
+        fclose($file);
+        fwrite($stdout, "Created article: ".$filepath."\r\n");
+    }
+}
+
+fclose($stdout);
+
+?>
