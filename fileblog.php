@@ -82,7 +82,7 @@ class Fileblog {
         }
 
         $this->render_page(array(
-            'page_title' => 'File Blog',
+            'page_title' => $page == 1 ? $this->config['homepage_title'] : 'Page '.$page,
             'page_content' => $this->render_template('article_list', array(
                 'articles' => $articles,
                 'pagination' => $pagination,

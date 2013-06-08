@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title><%= $page_title %></title>
+        <title><%= $page_title %><%= $app->config['page_title_suffix'] %></title>
     </head>
     <body>
         <%= $page_content %>
