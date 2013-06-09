@@ -14,17 +14,11 @@ It's a good idea to precompile all [underscore.js](http://underscorejs.org/) tem
 
     var templates = {};
 
-    (function () {
-        $(document).ready(function () {
-            $("script[type='text/template']").each(function () {
-                var name = $(this).data('name');
-
-                if (name) {
-                    templates[name] = _.template($(this).html());
-                }
-            });
+    $(document).ready(function () {
+        $("script[type='text/template']").each(function () {
+            templates[$(this).data('name')] = _.template($(this).html());
         });
-    }());
+    });
 
 
 Now you can call these templates by name anywhere on your page:
