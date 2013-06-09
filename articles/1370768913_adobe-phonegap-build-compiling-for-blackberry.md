@@ -8,6 +8,6 @@ All files must only have alphanumeric characters. That means no dashes (`-`)
 or underscores ( `_` ) or periods (`.`) in the basename of the file.
 
 2. **File sizes**:
-Any assets or resources (images / icons) **should not exceed** 800KB.
+Any asset or resource (image / icon) **should not exceed** 800KB in size.
 
 Yes, this is all very irritating, but that's how it is.
