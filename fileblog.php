@@ -21,6 +21,7 @@ class Fileblog {
             'article_list' => __::template(file_get_contents($dir.'/templates/article-list.html')),
             '404'          => __::template(file_get_contents($dir.'/templates/404.html')),
             'page'         => __::template(file_get_contents($dir.'/templates/layout.html')),
+            'sitemap'      => __::template(file_get_contents($dir.'/templates/sitemap.xml')),
         );
     }
 
@@ -93,6 +94,23 @@ class Fileblog {
         ));
     }
 
+    private function sitemap() {
+        $filelist = glob(dirname(__FILE__).'/'.$this->config['articles_dir'].'/*.md');
+        $filelist = array_reverse($filelist);
+
+        $articles = array();
+        foreach ($filelist as $file) {
+            $articles[] = $this->read_article($file);
+        }
+
+        header('Content-type: application/xml');
+
+        echo $this->templates['sitemap'](array(
+            'articles' => $articles,
+            'app' => $this,
+        ));
+    }
+
     private function show_article($url_segments) {
         $urldata = array_combine(array('y', 'm', 'd', 'slug'), $url_segments);
         $udate = strtotime($urldata['y'].'-'.$urldata['m'].'-'.$urldata['d']);
@@ -160,6 +178,9 @@ class Fileblog {
 
             if ($parts[0] == 'page') {
                 $this->show_list(intval($parts[1]));
+            }
+            elseif ($parts[0] == 'sitemap.xml') {
+                $this->sitemap();
             }
             elseif (sizeof($parts) == 4) {
                 $this->show_article($parts);
